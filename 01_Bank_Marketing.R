@@ -1,3 +1,6 @@
+# Bank Marketing data set taken from:
+# http://archive.ics.uci.edu/ml/datasets/bank+marketing 
+
 
 # Install needed packages
 pkgs <- c('dplyr','readr','funModeling',
@@ -10,24 +13,26 @@ for (pkg in pkgs) {
 
 
 # Load packages to read from csv and manipulate data in a 'tidy' way
+# readr provides a fast and friendly way to read rectangular data
+# (like 'csv', 'tsv', and 'fwf')
 library(readr)
 library(dplyr)
 
 
 project_folder <- "Z:/SolidQ/Speaker/2019 - R for Data Science/"
 
-
+# Unzip and read the CSV file
 bank <- paste0(project_folder,'bank-marketing.zip') %>%
   unzip('bank-additional-full.csv') %>%
   read_delim(delim = ';')
 
 
-# rename target class value 'yes' for better interpretation and convert to factor
+# Rename target class value 'yes' for better interpretation and convert to factor
 bank <- bank %>%
   mutate(y = ifelse(y == 'yes', 'term.deposit', y))
 
 
-# transform strings in factors
+# Transform strings in factors
 bank <- bank %>%
   mutate_if(is.character, as.factor)
 
